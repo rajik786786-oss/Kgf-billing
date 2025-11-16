@@ -33,4 +33,13 @@
 
     "extra": {
       "eas": {
-        "projectId": "4ac828
+        "projectId": "4ac828be-3041-4731-b86e-12bf22877fdc"
+      }
+    },
+
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}
