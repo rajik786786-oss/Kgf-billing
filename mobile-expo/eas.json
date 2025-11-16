@@ -1,0 +1,13 @@
+{
+  "cli": {
+    "version": ">= 3.30.0"
+  },
+  "build": {
+    "production": {
+      "releaseChannel": "production",
+      "android": {
+        "buildType": "app-bundle"
+      }
+    }
+  }
+}
