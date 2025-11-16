@@ -7,13 +7,29 @@ import BluetoothBLE from './Screens/BluetoothBLE';
 
 const Stack = createNativeStackNavigator();
 
-export default function App(){
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} options={{ title: "KGF MEN'S WEAR" }} />
-        <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} options={{ title: "Scan Barcode" }} />
-        <Stack.Screen name="Bluetooth" component={BluetoothBLE} options={{ title: "Bluetooth Pairing" }} />
+
+        <Stack.Screen 
+          name="Home" 
+          component={Home} 
+          options={{ title: "KGF MEN'S WEAR" }} 
+        />
+
+        <Stack.Screen 
+          name="BarcodeScanner" 
+          component={BarcodeScanner} 
+          options={{ title: "Scan Barcode" }} 
+        />
+
+        <Stack.Screen 
+          name="Bluetooth" 
+          component={BluetoothBLE} 
+          options={{ title: "Bluetooth Pairing" }} 
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
