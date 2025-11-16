@@ -1,16 +1,12 @@
 {
-  "cli": {
-    "version": ">= 3.14.0"
-  },
   "build": {
     "production": {
-      "distribution": "internal",
       "android": {
         "buildType": "apk"
       }
     }
   },
-  "submit": {
-    "production": {}
+  "cli": {
+    "appVersionSource": "remote"
   }
 }
