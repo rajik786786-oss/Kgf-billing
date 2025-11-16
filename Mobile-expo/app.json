@@ -7,17 +7,14 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-
     "assetBundlePatterns": [
       "**/*"
     ],
-
     "android": {
       "package": "com.kgfmenswear.billing",
       "versionCode": 1,
@@ -26,20 +23,14 @@
         "backgroundColor": "#ffffff"
       }
     },
-
-    "ios": {
-      "supportsTablet": true
-    },
-
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "extra": {
       "eas": {
         "projectId": "4ac828be-3041-4731-b86e-12bf22877fdc"
       }
-    },
-
-    "platforms": [
-      "ios",
-      "android"
-    ]
+    }
   }
 }
