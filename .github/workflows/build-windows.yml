@@ -23,9 +23,6 @@ jobs:
 
       - name: Build Electron (electron-builder)
         working-directory: desktop-electron
-        env:
-          CSC_LINK: ${{ secrets.CSC_LINK || '' }}
-          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD || '' }}
         run: npm run dist
 
       - name: Upload artifact
