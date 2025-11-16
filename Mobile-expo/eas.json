@@ -1,12 +1,26 @@
 {
+  "cli": {
+    "version": ">= 3.10.0"
+  },
   "build": {
-    "production": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
       "android": {
         "buildType": "apk"
       }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "distribution": "store",
+      "android": {
+        "buildType": "app-bundle"
+      }
     }
-  },
-  "cli": {
-    "appVersionSource": "remote"
   }
 }
