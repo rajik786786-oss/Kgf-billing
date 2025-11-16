@@ -1,12 +1,36 @@
 {
   "cli": {
-    "version": ">= 8.0.0"
+    "version": ">= 1.15.1"
   },
   "build": {
     "production": {
+      "distribution": "internal",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease",
+        "ndk": "auto"
+      },
+      "ios": {
+        "buildType": "archive"
+      },
+      "env": {},
+      "developmentClient": false,
+      "releaseChannel": "production",
+      "cache": {
+        "clear": true
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "cache": {
+        "clear": false
       }
     }
+  },
+  "submit": {
+    "production": {}
   }
 }
