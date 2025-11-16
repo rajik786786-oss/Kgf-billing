@@ -6,9 +6,6 @@
     "production": {
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "EXPO_NO_CACHE": "1"
       }
     },
     "development": {
