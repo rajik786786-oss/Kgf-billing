@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './screens/Home';
-import BarcodeScanner from './screens/BarcodeScanner';
-import BluetoothBLE from './screens/BluetoothBLE';
+import Home from './Screens/Home';
+import BarcodeScanner from './Screens/BarcodeScanner';
+import BluetoothBLE from './Screens/BluetoothBLE';
 
 const Stack = createNativeStackNavigator();
 
