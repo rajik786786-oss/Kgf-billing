@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "KGF Billing",
+    "slug": "kgf-billing",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.kgf.menswear"
+    },
+    "platforms": ["android"]
+  }
+}
