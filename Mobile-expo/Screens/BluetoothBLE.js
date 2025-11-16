@@ -1,56 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, FlatList, TouchableOpacity, Alert } from 'react-native';
-import { BleManager } from 'react-native-ble-plx';
+// Mobile-expo/Screens/BluetoothBLE.js
+import React from 'react';
+import { View, Text, Button } from 'react-native';
 
-export default function BluetoothBLE(){
-  const [manager] = useState(new BleManager());
-  const [devices, setDevices] = useState([]);
-  const [scanning, setScanning] = useState(false);
-
-  useEffect(()=> {
-    return ()=> manager.destroy();
-  }, [manager]);
-
-  const startScan = async () => {
-    setDevices([]); setScanning(true);
-    try {
-      manager.startDeviceScan(null, null, (error, device) => {
-        if(error){ Alert.alert('Scan error', error.message); setScanning(false); return; }
-        if(device && device.id){
-          setDevices(prev => prev.find(d => d.id === device.id) ? prev : [...prev, device]);
-        }
-      });
-      setTimeout(()=> { manager.stopDeviceScan(); setScanning(false); }, 8000);
-    } catch(e){
-      Alert.alert('BLE error', e.message); setScanning(false);
-    }
-  };
-
-  const connectToDevice = async (device) => {
-    try {
-      const connected = await manager.connectToDevice(device.id);
-      await connected.discoverAllServicesAndCharacteristics();
-      Alert.alert('Connected', `Connected to ${device.name || device.id}`);
-    } catch(e){
-      Alert.alert('Connection error', e.message);
-    }
-  };
-
+export default function BluetoothBLE({ navigation }) {
   return (
-    <View style={{ padding:20, marginTop:30 }}>
-      <Text style={{ fontSize:18, marginBottom:10 }}>Bluetooth (BLE) Devices</Text>
-      <Button title={scanning ? 'Scanning...' : 'Scan for Devices'} onPress={startScan} disabled={scanning} />
-      <View style={{ height:12 }} />
-      <FlatList data={devices} keyExtractor={item => item.id} renderItem={({ item }) => (
-        <TouchableOpacity onPress={() => connectToDevice(item)} style={{ padding:12, borderBottomWidth:1 }}>
-          <Text>{item.name || 'Unknown'} - {item.id}</Text>
-          <Text>RSSI: {item.rssi}</Text>
-        </TouchableOpacity>
-      )} ListEmptyComponent={<Text>No devices found yet.</Text>} />
-      <View style={{ marginTop:20 }}>
-        <Text style={{ fontWeight:'bold' }}>Note:</Text>
-        <Text>react-native-ble-plx requires native modules. Use Expo prebuild / dev client or eject to bare workflow to use BLE.</Text>
-      </View>
+    <View style={{ flex:1, padding:20, justifyContent:'center', alignItems:'center' }}>
+      <Text style={{ fontSize:16, marginBottom:12, textAlign:'center' }}>
+        Bluetooth functionality (BLE) is disabled in this build.
+      </Text>
+
+      <Text style={{ marginBottom:12, textAlign:'center' }}>
+        To enable real BLE you must:
+        {"\n"}• Add the native library (react-native-ble-plx)
+        {"\n"}• Build a custom dev client or prebuild with EAS
+      </Text>
+
+      <Button title="Back" onPress={() => navigation.goBack()} />
     </View>
   );
 }
