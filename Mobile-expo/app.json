@@ -1,12 +1,39 @@
 {
   "expo": {
-    "name": "kgf-billing-mobile",
+    "name": "KGF Billing",
     "slug": "kgf-billing-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "platforms": [
-      "android"
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
     ],
-    "jsEngine": "hermes"
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.kgfmenswear.billing",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4ac828be-3041-4731-b86e-12bf22877fdc"
+      }
+    }
   }
 }
