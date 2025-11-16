@@ -1,0 +1,28 @@
+{
+  "name": "kgf-billing-desktop",
+  "version": "0.2.0",
+  "description": "KGF MEN'S WEAR - Billing desktop",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "lowdb": "^1.0.0",
+    "electron-store": "^8.0.0"
+  },
+  "devDependencies": {
+    "electron": "^25.0.0",
+    "electron-builder": "^24.9.0"
+  },
+  "build": {
+    "appId": "com.kgf.menswear",
+    "productName": "KGF Billing",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    }
+  }
+}
