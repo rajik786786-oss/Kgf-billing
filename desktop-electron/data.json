@@ -1,0 +1,10 @@
+{
+  "items": [
+    {"name":"Plain Shirt","barcode":"1001","rate":499.0,"gst":12,"stock":50},
+    {"name":"Jeans","barcode":"1002","rate":999.0,"gst":18,"stock":30}
+  ],
+  "customers": [],
+  "vendors": [],
+  "bills": [],
+  "settings": {"gstEnabled": true, "loyaltyEnabled": true}
+}
