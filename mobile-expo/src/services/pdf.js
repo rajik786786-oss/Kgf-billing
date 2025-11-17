@@ -76,23 +76,53 @@ export function generateInvoiceHtml({ shop = {}, customer = {}, items = [], invo
 
 /**
  * Create PDF file from invoice data and save to FileSystem.documentDirectory/invoices/
- * Returns saved file path (URI).
+ * Returns an object: { fileUri } on success, or throws an Error on failure.
  */
-export async function createInvoicePdfAndSave({ shop, customer, items, invoiceMeta }) {
-  const html = generateInvoiceHtml({ shop, customer, items, invoiceMeta });
-  // create PDF in a temp location
-  const { uri } = await Print.printToFileAsync({ html });
-  // ensure invoices directory exists
-  const invoicesDir = `${FileSystem.documentDirectory}invoices`;
-  try {
-    const stat = await FileSystem.getInfoAsync(invoicesDir);
-    if (!stat.exists) await FileSystem.makeDirectoryAsync(invoicesDir, { intermediates: true });
-  } catch (e) {
-    // ignore
+export async function createInvoicePdfAndSave({ shop = {}, customer = {}, items = [], invoiceMeta = {} }) {
+  if (!FileSystem.documentDirectory) {
+    // This should not happen on real mobile devices, but guard it.
+    throw new Error('FileSystem.documentDirectory is not available on this platform.');
   }
-  const dest = `${invoicesDir}/invoice-${Date.now()}.pdf`;
-  // move temp pdf to persistent location
-  await FileSystem.copyAsync({ from: uri, to: dest });
-  // optional: delete temp uri (platform may manage)
-  return dest;
+
+  const html = generateInvoiceHtml({ shop, customer, items, invoiceMeta });
+
+  try {
+    // printToFileAsync writes a temp PDF. result usually = { uri: 'file:///...' }
+    const result = await Print.printToFileAsync({ html });
+    const tempUri = (result && (result.uri || result.file || result.path)) ? (result.uri || result.file || result.path) : null;
+    if (!tempUri) throw new Error('printToFileAsync did not return a file URI.');
+
+    const invoicesDir = `${FileSystem.documentDirectory}invoices`;
+    // ensure invoices directory exists
+    try {
+      const stat = await FileSystem.getInfoAsync(invoicesDir);
+      if (!stat.exists) {
+        await FileSystem.makeDirectoryAsync(invoicesDir, { intermediates: true });
+      }
+    } catch (e) {
+      // if directory creation fails, still surface a meaningful error later
+      console.warn('Could not verify/create invoices dir:', e);
+    }
+
+    const dest = `${invoicesDir}/invoice-${Date.now()}.pdf`;
+
+    // copy temp PDF to persistent destination
+    try {
+      await FileSystem.copyAsync({ from: tempUri, to: dest });
+    } catch (copyErr) {
+      // fallback: try move (some platforms support move)
+      try {
+        await FileSystem.moveAsync({ from: tempUri, to: dest });
+      } catch (moveErr) {
+        // if both fail, surface the original copy error
+        throw copyErr;
+      }
+    }
+
+    // success: return object with consistent shape
+    return { fileUri: dest };
+  } catch (err) {
+    console.error('createInvoicePdfAndSave error:', err);
+    throw err;
+  }
 }

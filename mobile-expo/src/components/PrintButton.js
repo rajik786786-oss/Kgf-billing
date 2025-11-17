@@ -1,32 +1,37 @@
 // src/components/PrintButton.js
-import React, { useState } from 'react';
-import { Button, Alert } from 'react-native';
-import * as Sharing from 'expo-sharing';
-import { createInvoicePdfAndSave } from '../services/pdf';
+import React from 'react';
+import { TouchableOpacity, Text, ActivityIndicator, StyleSheet } from 'react-native';
 
-export default function PrintButton({ shop = {}, customer = {}, items = [], invoiceMeta = {}, onDone }) {
-  const [working, setWorking] = useState(false);
-
-  const handlePrint = async () => {
-    if (!items || items.length === 0) return Alert.alert('No items', 'Add items before printing');
-    setWorking(true);
-    try {
-      const fileUri = await createInvoicePdfAndSave({ shop, customer, items, invoiceMeta });
-      // Try to share if available
-      const canShare = await Sharing.isAvailableAsync();
-      if (canShare) {
-        await Sharing.shareAsync(fileUri);
-      } else {
-        Alert.alert('Saved', `PDF saved to: ${fileUri}`);
-      }
-      if (typeof onDone === 'function') onDone(fileUri);
-    } catch (e) {
-      console.error(e);
-      Alert.alert('Print failed', e.message || String(e));
-    } finally {
-      setWorking(false);
-    }
-  };
-
-  return <Button title={working ? 'Processing...' : 'Print / Share Invoice'} onPress={handlePrint} disabled={working} />;
+export default function PrintButton({ label = 'Print / Save PDF', onPress, working = false }) {
+  return (
+    <TouchableOpacity
+      style={[styles.btn, working ? styles.btnWorking : null]}
+      onPress={onPress}
+      disabled={working}
+    >
+      {working ? (
+        <ActivityIndicator color="#fff" />
+      ) : (
+        <Text style={styles.label}>{label}</Text>
+      )}
+    </TouchableOpacity>
+  );
 }
+
+const styles = StyleSheet.create({
+  btn: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: '#2b6cb0',
+    alignItems: 'center',
+    marginVertical: 8,
+  },
+  btnWorking: {
+    opacity: 0.6,
+  },
+  label: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+});
